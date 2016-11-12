@@ -30,9 +30,11 @@ class StorableTests: XCTestCase {
     
     func testDispatchAction() {
         store.subscribe(subscriber)
+        XCTAssertFalse((store.state as! ConcreteStateTest).testVarChanged)
+        XCTAssertFalse(subscriber.subscriberSetStateCalled)
         let action = ConcreteActionTest()
         store.dispatchAction(action: action)
-        XCTAssert((store.state as! ConcreteStateTest).testVarChanged == true)
+        XCTAssertTrue((store.state as! ConcreteStateTest).testVarChanged)
         XCTAssertTrue(subscriber.subscriberSetStateCalled)
     }
     
@@ -53,32 +55,16 @@ class StorableTests: XCTestCase {
     
     func testUpdateSubscribers() {
         store.subscribe(subscriber)
+        XCTAssertFalse(subscriber.subscriberSetStateCalled)
         store.updateSubscribers()
         XCTAssertTrue(subscriber.subscriberSetStateCalled)
     }
-}
-
-struct ConcreteActionTest: Action {}
-struct ConcreteStateTest: State {
-    var testVarChanged: Bool = false
-}
-
-class ConcreteReducerTest: Reducer {
-    var handleActionWasCalled = false
-    var initialState: State = ConcreteStateTest()
-    func handleAction(action: Action, state: State) -> State {
-        var newState = state as! ConcreteStateTest
-        newState.testVarChanged = true
-        self.handleActionWasCalled = true
-        return newState
-    }
-}
-
-class ConcreteSubscriberTest: Subscriber {
-    var identifier: String = "ABCDEFG"
-    var state: State?
-    var subscriberSetStateCalled = false
-    func setState(state: State) {
-        subscriberSetStateCalled = true
+    
+    func testSetStateUpdatesSubscribers() {
+        store.subscribe(subscriber)
+        XCTAssertFalse(subscriber.subscriberSetStateCalled)
+        let state = ConcreteStateTest()
+        store.state = state
+        XCTAssertTrue(subscriber.subscriberSetStateCalled)
     }
 }

@@ -21,6 +21,7 @@
 		5B5DE5731DD72793000DD45B /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B5DE5701DD7277D000DD45B /* Quick.framework */; };
 		5B5DE5751DD727D1000DD45B /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5B5DE5701DD7277D000DD45B /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5B5DE5761DD727D1000DD45B /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5B5DE56E1DD7277B000DD45B /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5B5DE5781DD72845000DD45B /* ConcreteHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5DE5771DD72845000DD45B /* ConcreteHelpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		5B5DE56B1DD7197A000DD45B /* StoreTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreTests.swift; sourceTree = "<group>"; };
 		5B5DE56E1DD7277B000DD45B /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		5B5DE5701DD7277D000DD45B /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
+		5B5DE5771DD72845000DD45B /* ConcreteHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConcreteHelpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 				5B5DE5531DD6DF3E000DD45B /* Info.plist */,
 				5B5DE5691DD71831000DD45B /* SubscriberTests.swift */,
 				5B5DE56B1DD7197A000DD45B /* StoreTests.swift */,
+				5B5DE5771DD72845000DD45B /* ConcreteHelpers.swift */,
 			);
 			path = ReduxsterTests;
 			sourceTree = "<group>";
@@ -267,6 +270,7 @@
 			files = (
 				5B5DE5521DD6DF3E000DD45B /* ReduxsterTests.swift in Sources */,
 				5B5DE56A1DD71831000DD45B /* SubscriberTests.swift in Sources */,
+				5B5DE5781DD72845000DD45B /* ConcreteHelpers.swift in Sources */,
 				5B5DE56C1DD7197A000DD45B /* StoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
