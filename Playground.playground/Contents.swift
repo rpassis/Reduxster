@@ -3,26 +3,24 @@
 import UIKit
 import Reduxster
 
-var str = "Hello, playground"
-
-struct FMState: State {
-    var counter: Int = 0
+struct AppState: State {
+    var searchText: String = ""
 }
 
 enum FMAction: Action {
-    case increaseCounter(Int)
+    case searchText(String)
 }
 
 struct FMReducer: Reducer {
-    var initialState: State { return FMState() }
+    var initialState: State { return AppState() }
     
     func handleAction(action: Action, state: State) -> State {
-        guard let action = action as? FMAction, var fmState = state as? FMState else {
+        guard let action = action as? FMAction, var fmState = state as? AppState else {
             return self.initialState
         }
         switch action {
-        case .increaseCounter(let amount):
-            fmState.counter = fmState.counter + amount
+        case .searchText(let text):
+            fmState.searchText = text
         }
         return fmState
     }
@@ -34,30 +32,27 @@ class FMSubscriber:Subscriber {
     var state: State?
     let identifier: String = NSUUID().uuidString
     func setState(state: State) {
-        if let state = state as? FMState {
+        if let state = state as? AppState {
             print("subscriber update called for identifier \(identifier)")
-            print("counter is now \(state.counter)")
-            self.state = state
+            print("search text is now \(state.searchText)")
         }
+        self.state = state
     }
     
-    func increaseCounter() {
-        let action = FMAction.increaseCounter(10)
+    func search(withText text: String) {
+        let action = FMAction.searchText(text)
         store.dispatchAction(action: action)
     }
     
     func setup() {
-        store.subscribe(s: self)
+        store.subscribe(self)
     }
     
     func tearUp() {
-        store.unsubscribe(s: self)
+        store.unsubscribe(self)
     }
 }
 
 let sub1 = FMSubscriber()
-let sub2 = FMSubscriber()
-store.subscribe(s: sub1)
-store.subscribe(s: sub2)
-sub1.increaseCounter()
-sub2.increaseCounter()
+store.subscribe(sub1)
+sub1.search(withText: "abc")

@@ -17,8 +17,8 @@ public protocol Storable {
     var reducer: R { get }
     var subscribers: [Subscriber] { get set }
     init(reducer: R)
-    mutating func subscribe(s: Subscriber)
-    mutating func unsubscribe(s: Subscriber)
+    mutating func subscribe(_ subscriber: Subscriber)
+    mutating func unsubscribe(_ subscriber: Subscriber)
     mutating func dispatchAction(action: Action)
     func updateSubscribers()
 }
@@ -28,12 +28,12 @@ public extension Storable {
         self.state = reducer.handleAction(action: action, state: state)
     }
     
-    mutating func subscribe(s: Subscriber) {
-        self.subscribers.append(s)
+    mutating func subscribe(_ subscriber: Subscriber) {
+        self.subscribers.append(subscriber)
     }
     
-    mutating func unsubscribe(s: Subscriber) {
-        self.subscribers = self.subscribers.filter({$0 != s})
+    mutating func unsubscribe(_ subscriber: Subscriber) {
+        self.subscribers = self.subscribers.filter({$0 != subscriber})
     }
     
     func updateSubscribers() {
