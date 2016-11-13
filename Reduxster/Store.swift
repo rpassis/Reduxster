@@ -30,6 +30,7 @@ public extension Storable {
     
     mutating func subscribe(_ subscriber: Subscriber) {
         self.subscribers.append(subscriber)
+        self.updateSubscribers()
     }
     
     mutating func unsubscribe(_ subscriber: Subscriber) {
