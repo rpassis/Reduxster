@@ -25,7 +25,13 @@ class StorableTests: XCTestCase {
     
     override func tearDown() {
         store = nil
+        subscriber = nil
         super.tearDown()
+    }
+    
+    func testInit() {
+        // Pending
+        XCTAssert(false)
     }
     
     func testDispatchAction() {
