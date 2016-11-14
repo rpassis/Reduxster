@@ -12,11 +12,10 @@ import UIKit
 var str = "Hello, playground"
 
 public protocol Storable {
-    associatedtype R: Reducer
     var state: State { get set }
-    var reducer: R { get }
+    var reducer: Reducer { get }
     var subscribers: [Subscriber] { get set }
-    init(reducer: R)
+    init(reducer: Reducer)
     mutating func subscribe(_ subscriber: Subscriber)
     mutating func unsubscribe(_ subscriber: Subscriber)
     mutating func dispatch(_ action: Action)
@@ -26,14 +25,14 @@ public protocol Storable {
 
 public extension Storable {
     
-    typealias ActionCreator = (_ state: State, _ store: Store<R>) -> Action?
+    typealias ActionCreator = (_ state: State, _ store: Store) -> Action?
     
     mutating func dispatch(_ action: Action) {
         self.state = reducer.handleAction(action: action, state: state)
     }
     
     mutating func dispatch(_ actionCreator: ActionCreator) -> Action? {
-        guard let action = actionCreator(self.state, self as! Store<R>) else {
+        guard let action = actionCreator(self.state, self as! Store) else {
             return nil
         }
         dispatch(action)
@@ -54,15 +53,15 @@ public extension Storable {
     }
 }
 
-public struct Store<R:Reducer>: Storable {
+public struct Store: Storable {
     public var state: State {
         didSet {
             updateSubscribers()
         }
     }
-    public let reducer: R
+    public let reducer: Reducer
     public var subscribers: [Subscriber] = []
-    public init(reducer: R) {
+    public init(reducer: Reducer) {
         self.reducer = reducer
         self.state = reducer.initialState
     }
