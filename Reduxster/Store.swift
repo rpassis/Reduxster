@@ -31,6 +31,7 @@ public extension Storable {
         self.state = reducer.handleAction(action: action, state: state)
     }
     
+    @discardableResult
     mutating func dispatch(_ actionCreator: ActionCreator) -> Action? {
         guard let action = actionCreator(self.state, self as! Store) else {
             return nil
