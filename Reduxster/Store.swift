@@ -19,13 +19,25 @@ public protocol Storable {
     init(reducer: R)
     mutating func subscribe(_ subscriber: Subscriber)
     mutating func unsubscribe(_ subscriber: Subscriber)
-    mutating func dispatchAction(action: Action)
+    mutating func dispatch(_ action: Action)
+    mutating func dispatch(_ actionCreator: ActionCreator) -> Action?
     func updateSubscribers()
 }
 
 public extension Storable {
-    mutating func dispatchAction(action: Action) {
+    
+    typealias ActionCreator = (_ state: State, _ store: Store<R>) -> Action?
+    
+    mutating func dispatch(_ action: Action) {
         self.state = reducer.handleAction(action: action, state: state)
+    }
+    
+    mutating func dispatch(_ actionCreator: ActionCreator) -> Action? {
+        guard let action = actionCreator(self.state, self as! Store<R>) else {
+            return nil
+        }
+        dispatch(action)
+        return action
     }
     
     mutating func subscribe(_ subscriber: Subscriber) {
@@ -54,4 +66,5 @@ public struct Store<R:Reducer>: Storable {
         self.reducer = reducer
         self.state = reducer.initialState
     }
-}
+    
+    }
